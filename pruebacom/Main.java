@@ -2,9 +2,9 @@ package pruebacom;
 
 public class Main {
     public static void main(String[] args) {
-        Analizador analizador = new Analizador();
-        GestorArchivos gestor = new GestorArchivos();
-        Ventana ventana = new Ventana(analizador, gestor);
+        Analizador ana = new Analizador();
+        GestorArchivos ges = new GestorArchivos();
+        Ventana ventana = new Ventana(ana, ges);
         ventana.setVisible(true);
     }
 }
