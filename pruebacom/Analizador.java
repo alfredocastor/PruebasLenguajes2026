@@ -6,28 +6,40 @@ import java.util.regex.Pattern;
 public class Analizador {
     private int contador;
     private String textoProcesado;
+    private String identificadores;
+
     public void analizarCodigo(String codigoOriginal) {
-        contador=0;
-        StringBuilder sb=new StringBuilder();
-        String regex="[A-Za-z]\\w*";
-        Pattern patron=Pattern.compile(regex);
+        contador = 0;
+        StringBuilder sbTexto = new StringBuilder();
+        StringBuilder sbIds = new StringBuilder();
 
-        String[] lineas=codigoOriginal.split("\n");
+        String regex = "[A-Za-z]\\w*";
+        Pattern patron = Pattern.compile(regex);
 
-        for (String linea:lineas) {
-            Matcher matcher=patron.matcher(linea);
-            while (matcher.find()){
+        String[] lineas = codigoOriginal.split("\n");
+
+        for (String linea : lineas) {
+            Matcher matcher = patron.matcher(linea);
+            while (matcher.find()) {
                 contador++;
+                sbIds.append(matcher.group()).append("\n"); // uno por línea
             }
-            String lineaModificada=linea.replaceAll(regex, "[$0]");
-            sb.append(lineaModificada).append("\n");
+            sbTexto.append(linea).append("\n");
         }
-        textoProcesado=sb.toString();
+
+        textoProcesado = sbTexto.toString();
+        identificadores = sbIds.toString();
     }
+
     public int getContador() {
         return contador;
     }
+
     public String getTextoProcesado() {
         return textoProcesado;
+    }
+
+    public String getIdentificadores() {
+        return identificadores;
     }
 }

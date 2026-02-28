@@ -88,7 +88,7 @@ public class Ventana extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jScrollTxtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollTxtMensajes, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollTxtMensajes, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -117,7 +117,14 @@ public class Ventana extends javax.swing.JFrame {
         if (!codigoFuente.isEmpty()) {
             analizador.analizarCodigo(codigoFuente);
             txtCodigo.setText(analizador.getTextoProcesado());
-            txtMensajes.setText("Total de identificadores: " + analizador.getContador());
+
+            String resultado =
+                "Lista de identificadores:\n" +
+                analizador.getIdentificadores() +
+                "\nTotal de identificadores: " + analizador.getContador();
+
+            txtMensajes.setText(resultado);
+
         } else {
             JOptionPane.showMessageDialog(this, "No hay código para analizar");
         }
