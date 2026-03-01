@@ -1,5 +1,7 @@
-package pruebacom;
 
+
+import pruebacom.control.Analizador;
+import pruebacom.control.GestorArchivos;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import java.io.File;

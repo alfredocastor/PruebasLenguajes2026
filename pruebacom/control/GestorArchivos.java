@@ -1,4 +1,4 @@
-package pruebacom;
+package pruebacom.control;
 
 import java.io.BufferedReader;
 import java.io.File;

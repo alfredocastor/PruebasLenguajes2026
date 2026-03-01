@@ -1,22 +1,31 @@
+package pruebacom.vista;
+
+import java.io.File;
+import java.io.IOException;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package pruebacom.vista;
-
 /**
  *
  * @author Alfredo
  */
 public class VentanaPrincipal extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName());
+    private pruebacom.control.Analizador analizador;
+    private pruebacom.control.GestorArchivos gestor;
 
     /**
-     * Creates new form VentanaPrincipal
+     * Creates new form Ventana
      */
     public VentanaPrincipal() {
         initComponents();
+        analizador = new pruebacom.control.Analizador();
+        gestor = new pruebacom.control.GestorArchivos();
     }
 
     /**
@@ -28,47 +37,128 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollTxtCodigo = new javax.swing.JScrollPane();
+        txtCodigo = new javax.swing.JTextArea();
+        jScrollTxtMensajes = new javax.swing.JScrollPane();
+        txtMensajes = new javax.swing.JTextArea();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        menuArchivo = new javax.swing.JMenu();
+        itemAbrir = new javax.swing.JMenuItem();
+        menuProcesos = new javax.swing.JMenu();
+        itemEncontrar = new javax.swing.JMenuItem();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 255, 255));
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+        txtCodigo.setColumns(20);
+        txtCodigo.setRows(5);
+        jScrollTxtCodigo.setViewportView(txtCodigo);
+
+        txtMensajes.setEditable(false);
+        txtMensajes.setColumns(20);
+        txtMensajes.setRows(5);
+        jScrollTxtMensajes.setViewportView(txtMensajes);
+
+        menuArchivo.setText("Archivo");
+
+        itemAbrir.setText("Abrir");
+        itemAbrir.addActionListener(this::itemAbrirActionPerformed);
+        menuArchivo.add(itemAbrir);
+
+        jMenuBar1.add(menuArchivo);
+
+        menuProcesos.setText("Procesos");
+
+        itemEncontrar.setText("Encontrar");
+        itemEncontrar.addActionListener(this::itemEncontrarActionPerformed);
+        menuProcesos.add(itemEncontrar);
+
+        jMenuBar1.add(menuProcesos);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollTxtCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, 492, Short.MAX_VALUE))
+                    .addComponent(jScrollTxtMensajes))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollTxtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollTxtMensajes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void itemAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemAbrirActionPerformed
+        JFileChooser chooser = new JFileChooser();
+        int opcion = chooser.showOpenDialog(this);
+
+        if (opcion == JFileChooser.APPROVE_OPTION) {
+            File archivo = chooser.getSelectedFile();
+            try {
+                String contenido = gestor.leerArchivo(archivo);
+                txtCodigo.setText(contenido);
+                txtMensajes.setText("Archivo cargado: " + archivo.getName());
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+            }
+        }
+    }//GEN-LAST:event_itemAbrirActionPerformed
+
+    private void itemEncontrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEncontrarActionPerformed
+        String codigoFuente = txtCodigo.getText();
+
+        if (!codigoFuente.isEmpty()) {
+            analizador.analizarCodigo(codigoFuente);
+            txtCodigo.setText(analizador.getTextoProcesado());
+            String resultado
+                    = "Lista de identificadores:\n"
+                    + analizador.getIdentificadores()
+                    + "\nTotal de identificadores: " + analizador.getContador();
+
+            txtMensajes.setText(resultado);
+
+            txtMensajes.append("\n\nNÚMEROS ENCONTRADOS:\n");
+
+            if (analizador.getContadorNumeros() > 0) {
+                txtMensajes.append(analizador.getNumeros());
+            } else {
+                txtMensajes.append("No se encontraron números válidos.");
+            }
+
+            txtMensajes.append("\nTotal de números: " + analizador.getContadorNumeros());
+
+        } else {
+            JOptionPane.showMessageDialog(this, "No hay código para analizar");
+        }
+    }//GEN-LAST:event_itemEncontrarActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new VentanaPrincipal().setVisible(true));
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem itemAbrir;
+    private javax.swing.JMenuItem itemEncontrar;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JScrollPane jScrollTxtCodigo;
+    private javax.swing.JScrollPane jScrollTxtMensajes;
+    private javax.swing.JMenu menuArchivo;
+    private javax.swing.JMenu menuProcesos;
+    private javax.swing.JTextArea txtCodigo;
+    private javax.swing.JTextArea txtMensajes;
     // End of variables declaration//GEN-END:variables
 }
