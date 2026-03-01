@@ -117,13 +117,19 @@ public class Ventana extends javax.swing.JFrame {
         if (!codigoFuente.isEmpty()) {
             analizador.analizarCodigo(codigoFuente);
             txtCodigo.setText(analizador.getTextoProcesado());
-
             String resultado =
                 "Lista de identificadores:\n" +
                 analizador.getIdentificadores() +
                 "\nTotal de identificadores: " + analizador.getContador();
-
             txtMensajes.setText(resultado);
+            System.out.println("====== NÚMEROS ENCONTRADOS ======");
+            if (analizador.getContadorNumeros() > 0) {
+                System.out.print(analizador.getNumeros());
+            } else {
+                System.out.println("No se encontraron números válidos.");
+            }
+            System.out.println("Total de números: " + analizador.getContadorNumeros());
+            System.out.println("=================================");
 
         } else {
             JOptionPane.showMessageDialog(this, "No hay código para analizar");
