@@ -1,4 +1,4 @@
-package pruebacom.vista;
+package analizadorlexico.vista;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,16 +16,21 @@ import javax.swing.JOptionPane;
 public class VentanaPrincipal extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName());
-    private pruebacom.control.Analizador analizador;
-    private pruebacom.control.GestorArchivos gestor;
+    private analizadorlexico.control.Analizador analizador;
+    private analizadorlexico.control.GestorArchivos gestor;
 
     /**
      * Creates new form Ventana
      */
     public VentanaPrincipal() {
         initComponents();
-        analizador = new pruebacom.control.Analizador();
-        gestor = new pruebacom.control.GestorArchivos();
+        analizador = new analizadorlexico.control.Analizador();
+        gestor = new analizadorlexico.control.GestorArchivos();
+        setLocationRelativeTo(null);
+        jScrollTxtCodigo.getVerticalScrollBar().setPreferredSize(new java.awt.Dimension(12, 0));
+        jScrollTxtMensajes.getVerticalScrollBar().setPreferredSize(new java.awt.Dimension(12, 0));
+        
+       
     }
 
     /**
@@ -41,23 +46,29 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         txtCodigo = new javax.swing.JTextArea();
         jScrollTxtMensajes = new javax.swing.JScrollPane();
         txtMensajes = new javax.swing.JTextArea();
-        jMenuBar1 = new javax.swing.JMenuBar();
+        barraMenu = new javax.swing.JMenuBar();
         menuArchivo = new javax.swing.JMenu();
         itemAbrir = new javax.swing.JMenuItem();
         menuProcesos = new javax.swing.JMenu();
         itemEncontrar = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setBackground(new java.awt.Color(255, 255, 255));
+        setTitle("Analizador ");
+        setBackground(new java.awt.Color(245, 245, 245));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         txtCodigo.setColumns(20);
         txtCodigo.setRows(5);
+        txtCodigo.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jScrollTxtCodigo.setViewportView(txtCodigo);
 
         txtMensajes.setEditable(false);
+        txtMensajes.setBackground(new java.awt.Color(255, 255, 255));
         txtMensajes.setColumns(20);
+        txtMensajes.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
         txtMensajes.setRows(5);
+        txtMensajes.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        txtMensajes.setCaretColor(new java.awt.Color(255, 255, 255));
         jScrollTxtMensajes.setViewportView(txtMensajes);
 
         menuArchivo.setText("Archivo");
@@ -66,7 +77,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         itemAbrir.addActionListener(this::itemAbrirActionPerformed);
         menuArchivo.add(itemAbrir);
 
-        jMenuBar1.add(menuArchivo);
+        barraMenu.add(menuArchivo);
 
         menuProcesos.setText("Procesos");
 
@@ -74,20 +85,19 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         itemEncontrar.addActionListener(this::itemEncontrarActionPerformed);
         menuProcesos.add(itemEncontrar);
 
-        jMenuBar1.add(menuProcesos);
+        barraMenu.add(menuProcesos);
 
-        setJMenuBar(jMenuBar1);
+        setJMenuBar(barraMenu);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollTxtCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, 492, Short.MAX_VALUE))
-                    .addComponent(jScrollTxtMensajes))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollTxtMensajes)
+                    .addComponent(jScrollTxtCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, 572, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -95,8 +105,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollTxtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollTxtMensajes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollTxtMensajes, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -151,9 +162,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuBar barraMenu;
     private javax.swing.JMenuItem itemAbrir;
     private javax.swing.JMenuItem itemEncontrar;
-    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollTxtCodigo;
     private javax.swing.JScrollPane jScrollTxtMensajes;
     private javax.swing.JMenu menuArchivo;

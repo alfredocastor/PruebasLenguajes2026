@@ -1,4 +1,4 @@
-package pruebacom.control;
+package analizadorlexico.control;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

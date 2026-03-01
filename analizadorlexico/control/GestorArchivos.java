@@ -1,4 +1,4 @@
-package pruebacom.control;
+package analizadorlexico.control;
 
 import java.io.BufferedReader;
 import java.io.File;
