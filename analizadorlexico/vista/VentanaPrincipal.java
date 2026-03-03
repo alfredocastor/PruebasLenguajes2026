@@ -29,8 +29,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         jScrollTxtCodigo.getVerticalScrollBar().setPreferredSize(new java.awt.Dimension(12, 0));
         jScrollTxtMensajes.getVerticalScrollBar().setPreferredSize(new java.awt.Dimension(12, 0));
-        
-       
+
     }
 
     /**
@@ -134,24 +133,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         if (!codigoFuente.isEmpty()) {
             analizador.analizarCodigo(codigoFuente);
-            txtCodigo.setText(analizador.getTextoProcesado());
-            String resultado
-                    = "Lista de identificadores:\n"
-                    + analizador.getIdentificadores()
-                    + "\nTotal de identificadores: " + analizador.getContador();
+
+            String resultado = "Identificadores y Números:\n"
+                    + analizador.getIdentificadores(); // Esta variable ya trae todo en orden
 
             txtMensajes.setText(resultado);
 
-            txtMensajes.append("\n\nNÚMEROS ENCONTRADOS:\n");
-
-            if (analizador.getContadorNumeros() > 0) {
-                txtMensajes.append(analizador.getNumeros());
-            } else {
-                txtMensajes.append("No se encontraron números válidos.");
-            }
-
+            txtMensajes.append("\n--------------------------------");
+            txtMensajes.append("\nTotal de identificadores: " + analizador.getContador());
             txtMensajes.append("\nTotal de números: " + analizador.getContadorNumeros());
-
         } else {
             JOptionPane.showMessageDialog(this, "No hay código para analizar");
         }

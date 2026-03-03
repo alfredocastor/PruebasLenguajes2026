@@ -4,6 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Analizador {
+
     private int contador;
     private String textoProcesado;
     private String identificadores;
@@ -14,37 +15,33 @@ public class Analizador {
         contador = 0;
         contadorNumeros = 0; // Reiniciamos contador de números
         StringBuilder sbTexto = new StringBuilder();
-        StringBuilder sbIds = new StringBuilder();
-        StringBuilder sbNumeros = new StringBuilder(); // Para guardar los números
-
-        String regexId = "[A-Za-z]\\w*";
-        Pattern patronId = Pattern.compile(regexId);
-        String regexNum = "(0|[1-9][0-9]*)";
-        Pattern patronNum = Pattern.compile(regexNum);
+        //StringBuilder sbIds = new StringBuilder();
+        StringBuilder sbResultados = new StringBuilder();
+        String regex = "([A-Za-z]\\w*)|(0|[1-9][0-9]*)";
+        Pattern patron = Pattern.compile(regex);
 
         String[] lineas = codigoOriginal.split("\n");
 
         for (String linea : lineas) {
             // Buscador de identificadores
-            Matcher matcherId = patronId.matcher(linea);
-            while (matcherId.find()) {
-                contador++;
-                sbIds.append(matcherId.group()).append("\n");
-            }
-            
-            // Buscador de números
-            Matcher matcherNum = patronNum.matcher(linea);
-            while (matcherNum.find()) {
-                contadorNumeros++;
-                sbNumeros.append(matcherNum.group()).append("\n");
+            Matcher matcher = patron.matcher(linea);
+            while (matcher.find()) {
+                if (matcher.group(1) != null) { // Es un Identificador
+                    contador++;
+                    sbResultados.append("ID: ").append(matcher.group(1)).append("\n");
+
+                } else if (matcher.group(2) != null) { // Es un Número
+                    contadorNumeros++;
+                    sbResultados.append("NUM: ").append(matcher.group(2)).append("\n");
+
+                }
+
+                sbTexto.append(linea).append("\n");
             }
 
-            sbTexto.append(linea).append("\n");
+            textoProcesado = sbTexto.toString();
+            identificadores = sbResultados.toString();
         }
-
-        textoProcesado = sbTexto.toString();
-        identificadores = sbIds.toString();
-        numeros = sbNumeros.toString(); // Guardamos los números encontrados
     }
 
     public int getContador() {
@@ -58,6 +55,7 @@ public class Analizador {
     public String getIdentificadores() {
         return identificadores;
     }
+
     public int getContadorNumeros() {
         return contadorNumeros;
     }
