@@ -9,7 +9,7 @@ package analizadorlexico.control;
  * @author Alfredo
  */
 public class Lexemas {
-    public class Tokens {
+  
 
     // Identificadores y Literales
     public static final int IDENTIFICADOR = 1;
@@ -37,6 +37,5 @@ public class Lexemas {
     public static final int PARENTESIS_ABRE = 53; // (
     public static final int PARENTESIS_CIERRA = 54; // )
 
-}
     
 }
