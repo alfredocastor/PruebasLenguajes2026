@@ -9,8 +9,12 @@ package analizadorlexico.control;
  * @author Alfredo
  */
 public class Lexemas {
+<<<<<<< Updated upstream
   
 
+=======
+    
+>>>>>>> Stashed changes
     // Identificadores y Literales
     public static final int IDENTIFICADOR = 1;
     public static final int NUMERO = 2;
@@ -37,5 +41,10 @@ public class Lexemas {
     public static final int PARENTESIS_ABRE = 53; // (
     public static final int PARENTESIS_CIERRA = 54; // )
 
-    
+<<<<<<< Updated upstream
+=======
 }
+
+>>>>>>> Stashed changes
+    
+
