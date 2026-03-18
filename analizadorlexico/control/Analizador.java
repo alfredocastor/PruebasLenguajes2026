@@ -2,8 +2,8 @@ package analizadorlexico.control;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.ArrayList; //este se va agregar
+import java.util.List; //este se va agregar
 
 public class Analizador {
 
@@ -20,8 +20,8 @@ public class Analizador {
         StringBuilder sbResultados = new StringBuilder();
         
         // La expresión regular con tu regla específica para los números
-        String regex = "([A-Za-z]\\w*)|(0|[1-9][0-9]*)|(==|!=|<=|>=|<|>|=)|(\\+|-|\\*|/)|(\\.|,|;|\\(|\\))";
-        List<String> listaLexemas = new ArrayList<>();
+        String regex = "([A-Za-z]\\w*)|(0|[1-9][0-9]*)|(==|!=|<=|>=|<|>|=)|(\\+|-|\\*|/)|(\\.|,|;|\\(|\\))"; //este se va agregar
+        List<String> listaLexemas = new ArrayList<>();//este tambien se va agregar
         Pattern patron = Pattern.compile(regex);
 
         String[] lineas = codigoOriginal.split("\n");
@@ -30,8 +30,8 @@ public class Analizador {
             Matcher matcher = patron.matcher(linea);
             
             while (matcher.find()) {
-                String lexemaEncontrado = matcher.group();
-                listaLexemas.add(lexemaEncontrado);
+                String lexemaEncontrado = matcher.group(); //este se va agregar
+                listaLexemas.add(lexemaEncontrado); //este se va agregar
 
                 if (matcher.group(1) != null) { // Es un Identificador
                     contador++;
@@ -39,11 +39,11 @@ public class Analizador {
                 } else if (matcher.group(2) != null) { // Es un Número
                     contadorNumeros++;
                     sbResultados.append("NUM: ").append(matcher.group(2)).append("\n");
-                } else if (matcher.group(3) != null) { // Op. Relacionales o Asignación
+                } else if (matcher.group(3) != null) { // Op. Relacionales o Asignación //este tambien se va agregar
                     System.out.println("OP_REL/ASIG: " + matcher.group(3));
-                } else if (matcher.group(4) != null) { // Op. Aritméticos
+                } else if (matcher.group(4) != null) { // Op. Aritméticos               //este tambien se va agregar
                     System.out.println("OP_ARIT: " + matcher.group(4));
-                } else if (matcher.group(5) != null) { // Puntuación
+                } else if (matcher.group(5) != null) { // Puntuación                   //este tambien se va agregar
                     System.out.println("PUNTUACION: " + matcher.group(5));
                 }
 
