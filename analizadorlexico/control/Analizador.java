@@ -15,9 +15,9 @@ public class Analizador {
 
    public void analizarCodigo(String codigoOriginal) {
         contador = 0;
-        contadorNumeros = 0; // Reiniciamos contador de números
+        contadorNumeros = 0;
         StringBuilder sbTexto = new StringBuilder();
-        StringBuilder sbResultados = new StringBuilder(); // <-- Regresamos el constructor para la ventana
+        StringBuilder sbResultados = new StringBuilder();
         
         // La expresión regular con tu regla específica para los números
         String regex = "([A-Za-z]\\w*)|(0|[1-9][0-9]*)|(==|!=|<=|>=|<|>|=)|(\\+|-|\\*|/)|(\\.|,|;|\\(|\\))";
@@ -33,17 +33,17 @@ public class Analizador {
                 String lexemaEncontrado = matcher.group();
                 listaLexemas.add(lexemaEncontrado);
 
-                if (matcher.group(1) != null) { // Es un Identificador -> SE VA A LA VENTANA
+                if (matcher.group(1) != null) { // Es un Identificador
                     contador++;
                     sbResultados.append("ID: ").append(matcher.group(1)).append("\n");
-                } else if (matcher.group(2) != null) { // Es un Número -> SE VA A LA VENTANA
+                } else if (matcher.group(2) != null) { // Es un Número
                     contadorNumeros++;
                     sbResultados.append("NUM: ").append(matcher.group(2)).append("\n");
-                } else if (matcher.group(3) != null) { // Op. Relacionales o Asignación -> TERMINAL
+                } else if (matcher.group(3) != null) { // Op. Relacionales o Asignación
                     System.out.println("OP_REL/ASIG: " + matcher.group(3));
-                } else if (matcher.group(4) != null) { // Op. Aritméticos -> TERMINAL
+                } else if (matcher.group(4) != null) { // Op. Aritméticos
                     System.out.println("OP_ARIT: " + matcher.group(4));
-                } else if (matcher.group(5) != null) { // Puntuación -> TERMINAL
+                } else if (matcher.group(5) != null) { // Puntuación
                     System.out.println("PUNTUACION: " + matcher.group(5));
                 }
 
