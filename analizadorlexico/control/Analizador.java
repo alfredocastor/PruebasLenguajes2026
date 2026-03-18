@@ -13,12 +13,13 @@ public class Analizador {
     private int contadorNumeros;
     private String numeros;
 
-    public void analizarCodigo(String codigoOriginal) {
+   public void analizarCodigo(String codigoOriginal) {
         contador = 0;
         contadorNumeros = 0; // Reiniciamos contador de números
         StringBuilder sbTexto = new StringBuilder();
-        //StringBuilder sbIds = new StringBuilder();
-        StringBuilder sbResultados = new StringBuilder();
+        StringBuilder sbResultados = new StringBuilder(); // <-- Regresamos el constructor para la ventana
+        
+        // La expresión regular con tu regla específica para los números
         String regex = "([A-Za-z]\\w*)|(0|[1-9][0-9]*)|(==|!=|<=|>=|<|>|=)|(\\+|-|\\*|/)|(\\.|,|;|\\(|\\))";
         List<String> listaLexemas = new ArrayList<>();
         Pattern patron = Pattern.compile(regex);
@@ -26,39 +27,33 @@ public class Analizador {
         String[] lineas = codigoOriginal.split("\n");
 
         for (String linea : lineas) {
-            // Buscador de identificadores
             Matcher matcher = patron.matcher(linea);
+            
             while (matcher.find()) {
                 String lexemaEncontrado = matcher.group();
                 listaLexemas.add(lexemaEncontrado);
-                if (matcher.group(1) != null) { // Es un Identificador
+
+                if (matcher.group(1) != null) { // Es un Identificador -> SE VA A LA VENTANA
                     contador++;
                     sbResultados.append("ID: ").append(matcher.group(1)).append("\n");
-
-                } else if (matcher.group(2) != null) { // Es un Número
+                } else if (matcher.group(2) != null) { // Es un Número -> SE VA A LA VENTANA
                     contadorNumeros++;
                     sbResultados.append("NUM: ").append(matcher.group(2)).append("\n");
-
-                }else if (matcher.group(3) != null) { // Op. Relacionales o Asignación
-                    sbResultados.append("OP_REL/ASIG: ").append(matcher.group(3)).append("\n");
-                } else if (matcher.group(4) != null) { // Op. Aritméticos
-                    sbResultados.append("OP_ARIT: ").append(matcher.group(4)).append("\n");
-                } else if (matcher.group(5) != null) { // Puntuación
-                    sbResultados.append("PUNTUACION: ").append(matcher.group(5)).append("\n");
+                } else if (matcher.group(3) != null) { // Op. Relacionales o Asignación -> TERMINAL
+                    System.out.println("OP_REL/ASIG: " + matcher.group(3));
+                } else if (matcher.group(4) != null) { // Op. Aritméticos -> TERMINAL
+                    System.out.println("OP_ARIT: " + matcher.group(4));
+                } else if (matcher.group(5) != null) { // Puntuación -> TERMINAL
+                    System.out.println("PUNTUACION: " + matcher.group(5));
                 }
 
                 sbTexto.append(linea).append("\n");
             }
 
             textoProcesado = sbTexto.toString();
-            identificadores = sbResultados.toString();
+            identificadores = sbResultados.toString(); 
         }
-        // Imprimir todos los lexemas separados y guardados en el ArrayList
-        System.out.println("--- Lexemas guardados en el ArrayList ---");
-        for (String lex : listaLexemas) {
-            System.out.println(lex);
-        }
-    }
+    }// <-- Le pasamos los textos guardados a la variable de
 
     public int getContador() {
         return contador;
