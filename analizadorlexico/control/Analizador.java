@@ -20,7 +20,7 @@ public class Analizador {
         StringBuilder sbResultados = new StringBuilder();
         
         // La expresión regular con tu regla específica para los números
-        String regex = "([A-Za-z]\\w*)|(0|[1-9][0-9]*)|(==|!=|<=|>=|<|>|=)|(\\+|-|\\*|/)|(\\.|,|;|\\(|\\))"; //este se va agregar
+        String regex = "([A-Za-z]\\w*)|(0|[1-9]\\d*)|(==|!=|<=|>=|<|>|=)|(\\+|-|\\*|/)|(\\.|,|;|\\(|\\))"; //este se va agregar
         List<String> listaLexemas = new ArrayList<>();//este tambien se va agregar
         Pattern patron = Pattern.compile(regex);
 
