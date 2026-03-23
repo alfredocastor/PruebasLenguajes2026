@@ -4,6 +4,8 @@
  */
 package analizadorlexico.control;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Alfredo
@@ -36,6 +38,17 @@ public class Lexemas {
     public static final int PUNTO_Y_COMA = 52; // ;
     public static final int PARENTESIS_ABRE = 53; // (
     public static final int PARENTESIS_CIERRA = 54; // )
+
+    //palabras reservadas. estos son ejemplos de como poder hacerlos
+    public static String[] palabrasReservadaString = {"Const","begin","for","while"};
+    public static ArrayList<String> palabrasRes= new ArrayList<String>();
+    public static void llenaPalRes(){
+        palabrasRes.add("Do");
+        palabrasRes.add("Then");
+        palabrasRes.add("for");
+        palabrasRes.add("while");
+    }
+
 
 
 
