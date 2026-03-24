@@ -147,6 +147,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             txtMensajes.append("\n--------------------------------");
             txtMensajes.append("\nTotal de identificadores: " + analizador.getContador());
             txtMensajes.append("\nTotal de números: " + analizador.getContadorNumeros());
+            
         } else {
             txtMensajes.setText("No hay código para analizar. Por favor, escribe o carga un archivo.");
         }
