@@ -24,6 +24,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
      */
     public VentanaPrincipal() {
         initComponents();
+        itemLexico.setEnabled(false); //agregue esto
         analizador = new analizadorlexico.control.Analizador();
         gestor = new analizadorlexico.control.GestorArchivos();
         setLocationRelativeTo(null);
@@ -127,6 +128,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 String contenido = gestor.leerArchivo(archivo);
                 txtCodigo.setText(contenido);
                 txtMensajes.setText("Archivo cargado: " + archivo.getName());
+                itemLexico.setEnabled(true);//agregue esto
+                itemSintactico.setEnabled(false); //agregue esto
             } catch (IOException e) {
                 JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
             }
@@ -151,6 +154,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         } else {
             txtMensajes.setText("No hay código para analizar. Por favor, escribe o carga un archivo.");
         }
+        if (!analizador.tieneErrores()) {//agregue esto
+    itemSintactico.setEnabled(true);
+    txtMensajes.append("\nAnálisis completado sin errores. Sintáctico habilitado.");
+} else {
+    itemSintactico.setEnabled(false);
+    txtMensajes.append("\nSe encontraron errores léxicos. Corríjalos para continuar.");
+}
     }//GEN-LAST:event_itemLexicoActionPerformed
 
     /**
