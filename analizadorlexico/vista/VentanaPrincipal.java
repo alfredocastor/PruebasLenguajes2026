@@ -48,8 +48,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         barraMenu = new javax.swing.JMenuBar();
         menuArchivo = new javax.swing.JMenu();
         itemAbrir = new javax.swing.JMenuItem();
-        menuProcesos = new javax.swing.JMenu();
-        itemEncontrar = new javax.swing.JMenuItem();
+        menuCompilar = new javax.swing.JMenu();
+        itemLexico = new javax.swing.JMenuItem();
+        itemSintactico = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Analizador ");
@@ -78,13 +79,17 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         barraMenu.add(menuArchivo);
 
-        menuProcesos.setText("Procesos");
+        menuCompilar.setText("Compilar");
 
-        itemEncontrar.setText("Encontrar");
-        itemEncontrar.addActionListener(this::itemEncontrarActionPerformed);
-        menuProcesos.add(itemEncontrar);
+        itemLexico.setText("Léxico");
+        itemLexico.addActionListener(this::itemLexicoActionPerformed);
+        menuCompilar.add(itemLexico);
 
-        barraMenu.add(menuProcesos);
+        itemSintactico.setText("Sintáctico");
+        itemSintactico.setEnabled(false);
+        menuCompilar.add(itemSintactico);
+
+        barraMenu.add(menuCompilar);
 
         setJMenuBar(barraMenu);
 
@@ -128,7 +133,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_itemAbrirActionPerformed
 
-    private void itemEncontrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEncontrarActionPerformed
+    private void itemLexicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemLexicoActionPerformed
         String codigoFuente = txtCodigo.getText();
 
         if (!codigoFuente.isEmpty()) {
@@ -143,9 +148,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             txtMensajes.append("\nTotal de identificadores: " + analizador.getContador());
             txtMensajes.append("\nTotal de números: " + analizador.getContadorNumeros());
         } else {
-            JOptionPane.showMessageDialog(this, "No hay código para analizar");
+            txtMensajes.setText("No hay código para analizar. Por favor, escribe o carga un archivo.");
         }
-    }//GEN-LAST:event_itemEncontrarActionPerformed
+    }//GEN-LAST:event_itemLexicoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -154,11 +159,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar barraMenu;
     private javax.swing.JMenuItem itemAbrir;
-    private javax.swing.JMenuItem itemEncontrar;
+    private javax.swing.JMenuItem itemLexico;
+    private javax.swing.JMenuItem itemSintactico;
     private javax.swing.JScrollPane jScrollTxtCodigo;
     private javax.swing.JScrollPane jScrollTxtMensajes;
     private javax.swing.JMenu menuArchivo;
-    private javax.swing.JMenu menuProcesos;
+    private javax.swing.JMenu menuCompilar;
     private javax.swing.JTextArea txtCodigo;
     private javax.swing.JTextArea txtMensajes;
     // End of variables declaration//GEN-END:variables

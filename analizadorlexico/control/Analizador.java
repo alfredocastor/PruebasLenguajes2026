@@ -13,12 +13,12 @@ public class Analizador {
     private int contadorNumeros;
     private String numeros;
 
-   public void analizarCodigo(String codigoOriginal) {
+    public void analizarCodigo(String codigoOriginal) {
         contador = 0;
         contadorNumeros = 0;
         StringBuilder sbTexto = new StringBuilder();
         StringBuilder sbResultados = new StringBuilder();
-        
+
         // La expresión regular con tu regla específica para los números
         String regex = "([A-Za-z]\\w*)|([1-9]\\d*|0)|(==|!=|<=|>=|<|>|=)|(\\+|-|\\*|/)|(\\.|,|;|\\(|\\))"; //este se va agregar
         List<String> listaLexemas = new ArrayList<>();//este tambien se va agregar
@@ -28,7 +28,7 @@ public class Analizador {
 
         for (String linea : lineas) {
             Matcher matcher = patron.matcher(linea);
-            
+
             while (matcher.find()) {
                 String lexemaEncontrado = matcher.group(); //este se va agregar
                 listaLexemas.add(lexemaEncontrado); //este se va agregar
@@ -36,14 +36,19 @@ public class Analizador {
                 if (matcher.group(1) != null) { // Es un Identificador
                     contador++;
                     sbResultados.append("ID: ").append(matcher.group(1)).append("\n");
+                    System.out.println("ID: " + matcher.group(1)); //cambie este
                 } else if (matcher.group(2) != null) { // Es un Número
                     contadorNumeros++;
                     sbResultados.append("NUM: ").append(matcher.group(2)).append("\n");
+                    System.out.println("NUM: " + matcher.group(2)); //cambie este
                 } else if (matcher.group(3) != null) { // Op. Relacionales o Asignación //este tambien se va agregar
+                    sbResultados.append("OP_REL/ASIG: ").append(matcher.group(3)).append("\n"); //cambie este
                     System.out.println("OP_REL/ASIG: " + matcher.group(3));
                 } else if (matcher.group(4) != null) { // Op. Aritméticos               //este tambien se va agregar
                     System.out.println("OP_ARIT: " + matcher.group(4));
+                    sbResultados.append("OP_ARIT: ").append(matcher.group(4)).append("\n"); //cambie este
                 } else if (matcher.group(5) != null) { // Puntuación                   //este tambien se va agregar
+                    sbResultados.append("PUNTUACION: ").append(matcher.group(5)).append("\n"); //cambie este
                     System.out.println("PUNTUACION: " + matcher.group(5));
                 }
 
@@ -51,7 +56,7 @@ public class Analizador {
             }
 
             textoProcesado = sbTexto.toString();
-            identificadores = sbResultados.toString(); 
+            identificadores = sbResultados.toString();
         }
     }// <-- Le pasamos los textos guardados a la variable de
 

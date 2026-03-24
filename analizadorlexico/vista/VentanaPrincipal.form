@@ -19,18 +19,24 @@
             </MenuItem>
           </SubComponents>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="menuProcesos">
+        <Menu class="javax.swing.JMenu" name="menuCompilar">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Procesos"/>
+            <Property name="text" type="java.lang.String" value="Compilar"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="itemEncontrar">
+            <MenuItem class="javax.swing.JMenuItem" name="itemLexico">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Encontrar"/>
+                <Property name="text" type="java.lang.String" value="L&#xe9;xico"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="itemEncontrarActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="itemLexicoActionPerformed"/>
               </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="itemSintactico">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Sint&#xe1;ctico"/>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
             </MenuItem>
           </SubComponents>
         </Menu>
