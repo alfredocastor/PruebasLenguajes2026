@@ -24,7 +24,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
      */
     public VentanaPrincipal() {
         initComponents();
-        itemLexico.setEnabled(false); //agregue esto
+        itemLexico.setEnabled(false); 
         analizador = new analizadorlexico.control.Analizador();
         gestor = new analizadorlexico.control.GestorArchivos();
         setLocationRelativeTo(null);
@@ -128,8 +128,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 String contenido = gestor.leerArchivo(archivo);
                 txtCodigo.setText(contenido);
                 txtMensajes.setText("Archivo cargado: " + archivo.getName());
-                itemLexico.setEnabled(true);//agregue esto
-                itemSintactico.setEnabled(false); //agregue esto
+                itemLexico.setEnabled(true);
+                itemSintactico.setEnabled(false); 
             } catch (IOException e) {
                 JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
             }
