@@ -2,8 +2,8 @@ package analizadorlexico.control;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.ArrayList; //este se va agregar
-import java.util.List; //este se va agregar
+import java.util.ArrayList; 
+import java.util.List; 
 import javax.swing.JOptionPane;//agregue esto
 
 public class Analizador {
@@ -25,7 +25,7 @@ public class Analizador {
 
         // La expresión regular con tu regla específica para los números
        String regex = "([A-Za-z]\\w*)|([1-9]\\d*|0)|(==|!=|<=|>=|<|>|=)|(\\+|-|\\*)|(\\.|,|;|\\(|\\)|:)|([^\\s])"; //agregue esto
-        List<String> listaLexemas = new ArrayList<>();//este tambien se va agregar
+        List<String> listaLexemas = new ArrayList<>();
         Pattern patron = Pattern.compile(regex);
 
         String[] lineas = codigoOriginal.split("\n");
@@ -34,8 +34,8 @@ public class Analizador {
             Matcher matcher = patron.matcher(linea);
 
             while (matcher.find()) {
-                String lexemaEncontrado = matcher.group(); //este se va agregar
-                listaLexemas.add(lexemaEncontrado); //este se va agregar
+                String lexemaEncontrado = matcher.group(); 
+                listaLexemas.add(lexemaEncontrado); 
 
                 if (matcher.group(1) != null) { // Es un Identificador
                     contador++;
@@ -65,7 +65,6 @@ public class Analizador {
         if (opcion == JOptionPane.NO_OPTION) {
             sbResultados.append("ANÁLISIS DETENIDO POR ERROR: ").append(matcher.group(6)).append("\n");
             break; // Rompe el ciclo y detiene el análisis
-            // Nota: Si prefieres cerrar el programa por completo en lugar de solo detener el análisis, usa System.exit(0);
         } else {
             ignorarErrores = true; // Ya no volverá a preguntar, solo los marcará
         }
