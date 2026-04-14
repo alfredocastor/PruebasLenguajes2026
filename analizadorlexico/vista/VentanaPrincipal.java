@@ -154,7 +154,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         } else {
             txtMensajes.setText("No hay código para analizar. Por favor, escribe o carga un archivo.");
         }
-        if (!analizador.tieneErrores()) {//agregue esto
+        if (!analizador.tieneErrores()) {
     itemSintactico.setEnabled(true);
     txtMensajes.append("\nAnálisis completado sin errores. Sintáctico habilitado.");
 } else {
