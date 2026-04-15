@@ -6,14 +6,14 @@ public class Lexema {
   private String tipo;
   private int token; 
   //constructor
-    public Lexema(String dato, String tipo, int token) {
+    public Lexema(String dato, String tipo) {
         this.dato = dato;
         this.tipo = tipo;
-        this.token = token;
+        this.token = ;
 
     }
+    
     //getters y setters
-
     public String getDato() {
         return dato;
     }

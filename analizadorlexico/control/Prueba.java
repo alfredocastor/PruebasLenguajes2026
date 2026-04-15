@@ -24,5 +24,7 @@ public class Prueba {
        
         Lexema l1=new Lexema("Computadora", "portatil");
         System.out.println(l1);
+        
     }
+    
 }

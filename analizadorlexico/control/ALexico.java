@@ -10,7 +10,7 @@ import java.util.ArrayList;
  *
  * @author Alfredo
  */
-public class Lexemas {
+public class ALexico {
 
   
     // Identificadores y Literales

@@ -5,38 +5,45 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Prueba2 {
-    
-    public static void main(String[] args) {
-        String regex ="([A-Za-z]\\w*)|"+//
-        "([1-9]\\d*|0)|"+//
-        "(==|!=|<=|>=|<|>|=)|"+//
-        "(\\+|-|\\*|/)|"+//
-        "(\\.|,|;|\\(|\\)|:)|"+//
-        "([^\\s])"+//
-        "(.)";
-                    String texto ="const x=100,y=10.21;var a___2,b_c_2_t,059\n" + //
-                                "a__2<<===!==xy-yx==>=>>100000000066\n" + //
-                                "if-while+for*then/do%to|downto\n" + //
-                                "(x_nueva(y_vieja))(b_c_2_t.\n" + //
-                                "fin_2";
-                Pattern patron=Pattern.compile(regex);
-                Matcher matcher=patron.matcher(texto);
-                ArrayList <String> lexemas=new ArrayList<>();
-                while (matcher.find()) {
-                     String lexemaEncontrado = matcher.group();
-                
-                      if (matcher.group(1) != null) { // Es un Identificador
-                    //Agregar a identifcadores
-                    lexemas.add(lexemaEncontrado);
-                    }
-                    if (matcher.group(6)!=null){
-                        System.out.println("ERROR");
-                    }
-                }
-                for(String e : lexemas){
-                    System.out.println(e);
 
-                }
-                    
-                }
+    public static void main(String[] args) {
+        String regex = "([A-Za-z]\\w*)|" +//
+                "([1-9]\\d*|0)|" +//
+                "(==|!=|<=|>=|<|>|=)|" +//
+                "(\\+|-|\\*|/)|" +//
+                "(\\.|,|;|\\(|\\)|:)|"+//
+                "([^\\s])" +//
+                "(.)";
+        String texto = "const x=100,y=10.21;var a___2,b_c_2_t,059\n" + //
+                "a__2<<===!==xy-yx==>=>>100000000066\n" + //
+                "if-while+for*then/do%to|downto\n" + //
+                "(x_nueva(y_vieja))(b_c_2_t.\n" + //
+                "fin_2";
+        Pattern patron = Pattern.compile(regex);
+        Matcher matcher = patron.matcher(texto);
+        ArrayList<Lexema> lexemas = new ArrayList<>();
+        while (matcher.find()) {
+            String lexemaEncontrado = matcher.group();
+
+            if (matcher.group(1) != null) { // Es un Identificador
+                //Agregar a identifcadores
+                lexemas.add(new Lexema(lexemaEncontrado,"ID"));
+                continue;//hcae el codigo mas elegante
+            }
+            if (matcher.group(2) != null) { //Es un numero
+                lexemas.add(new Lexema(lexemaEncontrado,"NUM"));
+                continue;
+            }
+            
+
+            if (matcher.group(6) != null) {
+                System.out.println("ERROR");
+            }
+        }
+        for (Lexema e : lexemas) {
+            System.out.println(e);
+
+        }
+
+    }
 }
