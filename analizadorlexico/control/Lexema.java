@@ -9,7 +9,7 @@ public class Lexema {
     public Lexema(String dato, String tipo) {
         this.dato = dato;
         this.tipo = tipo;
-        this.token = ;
+        this.token = token;
 
     }
     
