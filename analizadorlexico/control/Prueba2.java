@@ -37,7 +37,7 @@ public class Prueba2 {
             
 
             if (matcher.group(6) != null) {
-                System.out.println("ERROR");
+                lexemas.add(new Lexema(lexemaEncontrado,"Error"));
             }
         }
         for (Lexema e : lexemas) {

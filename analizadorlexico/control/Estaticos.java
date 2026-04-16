@@ -26,7 +26,7 @@ public class Estaticos {
         return mensaje;
     }
     public static int esReservada(String palabra){
-        int res= -1;
+        int res= 100;
         String[] reservadas ={"const","var","while"};
         palabra= palabra.toLowerCase();
         for (int i = 0; i < reservadas.length; i++) {

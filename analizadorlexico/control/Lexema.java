@@ -9,8 +9,14 @@ public class Lexema {
     public Lexema(String dato, String tipo) {
         this.dato = dato;
         this.tipo = tipo;
-        this.token = token;
-
+        if (tipo.equals("ID")) {
+            this.token = Estaticos.esReservada(dato);
+            this.tipo =(token==100)? tipo:"PR";
+            
+        }else{
+            this.token=0;
+        }
+        
     }
     
     //getters y setters
@@ -34,7 +40,7 @@ public class Lexema {
     
     @Override
     public String toString() {
-        return "[" + dato + "\t" + tipo + "]";
+        return "[" + dato + "\t" + tipo + "\t" + token + "]";
     }
 
     public int getToken() {
