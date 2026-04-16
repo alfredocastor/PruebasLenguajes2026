@@ -64,11 +64,12 @@ public class Analizador {
 
         // La expresión regular con tu regla específica para los números
         String regex = "([A-Za-z]\\w*)|" +//
-                       "([1-9]\\d*|0)|" +//
-                       "(==|!=|<=|>=|<|>|=)|" +//
-                       "(\\+|-|\\*|/)|" +//
-                       "(\\.|,|;|\\(|\\)|:)|" +//
-                        "([^\\s])";
+                "([1-9]\\d*|0)|" +//
+                "(==|!=|<=|>=|<|>|=)|" +//
+                "(\\+|-|\\*|/)|" +//
+                "(\\.|,|;|\\(|\\)|:)|"+//
+                "([^\\s])" +//
+                "(.)";
         List<String> listaLexemas = new ArrayList<>();
         Pattern patron = Pattern.compile(regex);
 
