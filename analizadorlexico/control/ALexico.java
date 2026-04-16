@@ -16,6 +16,22 @@ public class ALexico {
     // Identificadores y Literales
     public static final int IDENTIFICADOR = 1;
     public static final int NUMERO = 2;
+    //palabras reservadas
+    public static final int CONST = 10;
+    public static final int VAR = 11;
+    public static final int PROCED = 12;
+    public static final int BEGIN = 13;
+    public static final int END = 14;
+    public static final int WRITE = 15;
+    public static final int READ = 16;
+    public static final int CALL = 17;
+    public static final int IF = 18;
+    public static final int THEN = 19;
+    public static final int WHILE = 20;
+    public static final int DO = 21;
+    public static final int FOR = 22;
+    public static final int TO = 23;
+    public static final int DOWN = 24;
 
     // Operadores Relacionales
     public static final int IGUALDAD = 30; // ==

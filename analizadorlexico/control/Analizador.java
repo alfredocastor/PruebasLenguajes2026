@@ -14,6 +14,45 @@ public class Analizador {
     private int contadorNumeros;
     private String numeros;
     private boolean hayErrores;
+    // Método auxiliar para enumerar palabras reservadas
+    private int esReservada(String palabra) {
+        switch (palabra.toLowerCase()) {
+            case "const": return 10;
+            case "var": return 11;
+            case "proced": return 12;
+            case "begin": return 13;
+            case "end": return 14;
+            case "write": return 15;
+            case "read": return 16;
+            case "call": return 17;
+            case "if": return 18;
+            case "then": return 19;
+            case "while": return 20;
+            case "do": return 21;
+            case "for": return 22;
+            case "to": return 23;
+            case "down": return 24;
+            default: return 1; // ID - 1
+        }
+    }
+
+    // Método auxiliar para obtener tokens de operadores
+    private int obtenerTokenOp(String op) {
+        switch (op) {
+            case "==": return 30;
+            case "!=": return 31;
+            case "<": return 32;
+            case ">": return 33;
+            case "<=": return 34;
+            case ">=": return 35;
+            case "=": return 40;
+            case "+": return 41;
+            case "-": return 42;
+            case "*": return 43;
+            case "/": return 44;
+            default: return 0;
+        }
+    }
 
     public void analizarCodigo(String codigoOriginal) {
         contador = 0;
@@ -24,7 +63,12 @@ public class Analizador {
         boolean ignorarErrores = false;
 
         // La expresión regular con tu regla específica para los números
-        String regex = "([A-Za-z]\\w*)|([1-9]\\d*|0)|(==|!=|<=|>=|<|>|=)|(\\+|-|\\*)|(\\.|,|;|\\(|\\)|:)|([^\\s])";
+        String regex = "([A-Za-z]\\w*)|" +//
+                       "([1-9]\\d*|0)|" +//
+                       "(==|!=|<=|>=|<|>|=)|" +//
+                       "(\\+|-|\\*|/)|" +//
+                       "(\\.|,|;|\\(|\\)|:)|" +//
+                        "([^\\s])";
         List<String> listaLexemas = new ArrayList<>();
         Pattern patron = Pattern.compile(regex);
 
@@ -37,45 +81,68 @@ public class Analizador {
                 String lexemaEncontrado = matcher.group();
                 listaLexemas.add(lexemaEncontrado);
 
-                if (matcher.group(1) != null) { // Es un Identificador
+                if (matcher.group(1) != null) { // Es un Identificador o Palabra Reservada
                     contador++;
-                    sbResultados.append("ID: ").append(matcher.group(1)).append("\n");
-                    System.out.println("ID: " + matcher.group(1));
-                } else if (matcher.group(2) != null) { // Es un Número
+                    int token = esReservada(lexemaEncontrado);
+                    String tipo = (token == 1) ? "ID" : "PR";
+                    String out = String.format("[%s\t%s\t%d]\n", lexemaEncontrado, tipo, token);
+                    sbResultados.append(out);
+                    System.out.print(out);
+                    continue; 
+                } 
+                
+                if (matcher.group(2) != null) { // Es un Número
                     contadorNumeros++;
-                    sbResultados.append("NUM: ").append(matcher.group(2)).append("\n");
-                    System.out.println("NUM: " + matcher.group(2)); 
-                } else if (matcher.group(3) != null) { // Op. Relacionales o Asignación 
-                    sbResultados.append("OP_REL/ASIG: ").append(matcher.group(3)).append("\n"); 
-                    System.out.println("OP_REL/ASIG: " + matcher.group(3));
-                } else if (matcher.group(4) != null) { // Op. Aritméticos               
-                    System.out.println("OP_ARIT: " + matcher.group(4));
-                    sbResultados.append("OP_ARIT: ").append(matcher.group(4)).append("\n"); 
-                } else if (matcher.group(5) != null) { // Puntuación                  
-                    sbResultados.append("PUNTUACION: ").append(matcher.group(5)).append("\n"); 
-                    System.out.println("PUNTUACION: " + matcher.group(5));
-                } else if (matcher.group(6) != null) { // Es un Error (ej. % , /) 
+                    String out = String.format("[%s\tNUM\t2]\n", lexemaEncontrado); // Token NUM es 2
+                    sbResultados.append(out);
+                    System.out.print(out);
+                    continue; 
+                } 
+                
+                if (matcher.group(3) != null) { // Op. Relacionales o Asignación
+                    int token = obtenerTokenOp(lexemaEncontrado);
+                    String out = String.format("[%s\tOP_REL/ASIG\t%d]\n", lexemaEncontrado, token);
+                    sbResultados.append(out);
+                    System.out.print(out);
+                    continue; 
+                } 
+                
+                if (matcher.group(4) != null) { // Op. Aritméticos
+                    int token = obtenerTokenOp(lexemaEncontrado);
+                    String out = String.format("[%s\tOP_ARIT\t%d]\n", lexemaEncontrado, token);
+                    sbResultados.append(out);
+                    System.out.print(out);
+                    continue; 
+                } 
+                
+                if (matcher.group(5) != null) { // Puntuación 
+                    String out = String.format("[%s\tPUNTUACION\t0]\n", lexemaEncontrado);
+                    sbResultados.append(out);
+                    System.out.print(out);
+                    continue; 
+                } 
+                
+                if (matcher.group(6) != null) { // Es un Error
                     hayErrores = true;
                     if (!ignorarErrores) {
-                        // Preguntamos al usuario qué hacer
                         int opcion = JOptionPane.showConfirmDialog(null,
                                 "Error Léxico: Carácter no reconocido '" + matcher.group(6) + "'.\n¿Desea continuar y marcar todos los errores?",
                                 "Error encontrado", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
 
                         if (opcion == JOptionPane.NO_OPTION) {
                             sbResultados.append("ANÁLISIS DETENIDO POR ERROR: ").append(matcher.group(6)).append("\n");
-                            break; // Rompe el ciclo y detiene el análisis
+                            break; 
                         } else {
-                            ignorarErrores = true; // Ya no volverá a preguntar, solo los marcará
+                            ignorarErrores = true; 
                         }
                     }
-                    sbResultados.append("ERROR: [").append(matcher.group(6)).append("]\n");
-                    System.out.println("ERROR: " + matcher.group(6));
-                }//aqui termina el grupo 6
-
-                sbTexto.append(linea).append("\n");
+                    String out = String.format("[%s\tError\t0]\n", matcher.group(6));
+                    sbResultados.append(out);
+                    System.out.print(out);
+                    continue;
+                }
             }
-
+            sbTexto.append(linea).append("\n");
             textoProcesado = sbTexto.toString();
             identificadores = sbResultados.toString();
         }
