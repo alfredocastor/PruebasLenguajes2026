@@ -10,7 +10,7 @@ public class Lexema {
         this.dato = dato;
         this.tipo = tipo;
         if (tipo.equals("ID")) {
-           // this.token = Estaticos.esReservada(dato);
+           this.token = Estaticos.esReservada(dato);
             this.tipo =(token==100)? tipo:"PR";
             
         }else{

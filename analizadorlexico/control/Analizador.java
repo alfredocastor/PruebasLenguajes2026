@@ -17,39 +17,39 @@ public class Analizador {
     // Método auxiliar para enumerar palabras reservadas
     private int esReservada(String palabra) {
         switch (palabra.toLowerCase()) {
-            case "const": return 10;
-            case "var": return 11;
-            case "proced": return 12;
-            case "begin": return 13;
-            case "end": return 14;
-            case "write": return 15;
-            case "read": return 16;
-            case "call": return 17;
-            case "if": return 18;
-            case "then": return 19;
-            case "while": return 20;
-            case "do": return 21;
-            case "for": return 22;
-            case "to": return 23;
-            case "down": return 24;
-            default: return 1; // ID - 1
+            case "const": return ALexico.CONST;
+            case "var": return ALexico.VAR;
+            case "proced": return ALexico.PROCED;
+            case "begin": return ALexico.BEGIN;
+            case "end": return ALexico.END;
+            case "write": return ALexico.WRITE;
+            case "read": return ALexico.READ;
+            case "call": return ALexico.CALL;
+            case "if": return ALexico.IF;
+            case "then": return ALexico.THEN;
+            case "while": return ALexico.WHILE;
+            case "do": return ALexico.DO;
+            case "for": return ALexico.FOR;
+            case "to": return ALexico.TO;
+            case "down": return ALexico.DOWN;
+            default: return ALexico.IDENTIFICADOR;
         }
     }
 
     // Método auxiliar para obtener tokens de operadores
-    private int obtenerTokenOp(String op) {
+   private int obtenerTokenOp(String op) {
         switch (op) {
-            case "==": return 30;
-            case "!=": return 31;
-            case "<": return 32;
-            case ">": return 33;
-            case "<=": return 34;
-            case ">=": return 35;
-            case "=": return 40;
-            case "+": return 41;
-            case "-": return 42;
-            case "*": return 43;
-            case "/": return 44;
+            case "==": return ALexico.IGUALDAD;
+            case "!=": return ALexico.DIFERENCIA;
+            case "<": return ALexico.MENOR_QUE;
+            case ">": return ALexico.MAYOR_QUE;
+            case "<=": return ALexico.MENOR_IGUAL_QUE;
+            case ">=": return ALexico.MAYOR_IGUAL_QUE;
+            case "=": return ALexico.ASIGNACION;
+            case "+": return ALexico.SUMA;
+            case "-": return ALexico.RESTA;
+            case "*": return ALexico.MULTIPLICACION;
+            case "/": return ALexico.DIVISION;
             default: return 0;
         }
     }
@@ -62,13 +62,12 @@ public class Analizador {
         hayErrores = false;
         boolean ignorarErrores = false;
 
-        // La expresión regular con tu regla específica para los números
         String regex = "([A-Za-z]\\w*)|" +//
                 "([1-9]\\d*|0)|" +//
                 "(==|!=|<=|>=|<|>|=)|" +//
                 "(\\+|-|\\*|/)|" +//
                 "(\\.|,|;|\\(|\\)|:)|"+//
-                "([^\\s])" +//
+                "([^\\s])|" +//
                 "(.)";
         List<String> listaLexemas = new ArrayList<>();
         Pattern patron = Pattern.compile(regex);
@@ -85,7 +84,7 @@ public class Analizador {
                 if (matcher.group(1) != null) { // Es un Identificador o Palabra Reservada
                     contador++;
                     int token = esReservada(lexemaEncontrado);
-                    String tipo = (token == 1) ? "ID" : "PR";
+                    String tipo = (token == ALexico.IDENTIFICADOR) ? "ID" : "PR"; 
                     String out = String.format("[%s\t%s\t%d]\n", lexemaEncontrado, tipo, token);
                     sbResultados.append(out);
                     System.out.print(out);
@@ -94,11 +93,11 @@ public class Analizador {
                 
                 if (matcher.group(2) != null) { // Es un Número
                     contadorNumeros++;
-                    String out = String.format("[%s\tNUM\t2]\n", lexemaEncontrado); // Token NUM es 2
+                    String out = String.format("[%s\tNUM\t%d]\n", lexemaEncontrado, ALexico.NUMERO);
                     sbResultados.append(out);
                     System.out.print(out);
                     continue; 
-                } 
+                }
                 
                 if (matcher.group(3) != null) { // Op. Relacionales o Asignación
                     int token = obtenerTokenOp(lexemaEncontrado);
