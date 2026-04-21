@@ -10,15 +10,18 @@ public class Lexema {
         this.dato = dato;
         this.tipo = tipo;
         if (tipo.equals("ID")) {
-           this.token = Estaticos.esReservada(dato);
-            this.tipo =(token==100)? tipo:"PR";
-            
-        }else{
+           this.token = ALexico.esReservada(dato);
+           this.tipo =(this.token == ALexico.IDENTIFICADOR) ? "ID": "PR";
+        }else if (tipo.equals("NUM")) {
+            this.token = ALexico.NUMERO;
+        } else if (tipo.equals("ERROR")) {
             this.token=0;
+        }else{
+            this.tipo ="SIGNO";
+            this.token =ALexico.obtenerTokenOp(dato);
         }
-        
     }
-    
+   
     //getters y setters
     public String getDato() {
         return dato;
