@@ -34,6 +34,8 @@ public class Analizador {
 
         String[] lineas = codigoOriginal.split("\n");
 
+        int numeroLinea = 1;//nuevo todavia no lo agregamos al principal
+        
         for (String linea : lineas) {
             Matcher matcher = patron.matcher(linea);
 
@@ -68,6 +70,8 @@ public class Analizador {
                 
                 if (matcher.group(6) != null) { // Es un Error
                     hayErrores = true;
+                    int columna = matcher.start() + 1;//nuevo todavia no lo agregamos al principal
+                    String mensajeError = "Error Léxico -> Línea: " + numeroLinea + ", Columna: " + columna + " | Carácter: '" + matcher.group(6) + "'";//nuevo todavia no lo agregamos al principal
                     if (!ignorarErrores) {
                         int opcion = JOptionPane.showConfirmDialog(null,
                                 "Error Léxico: Carácter no reconocido '" + matcher.group(6) + "'.\n¿Desea continuar y marcar todos los errores?",
@@ -81,9 +85,11 @@ public class Analizador {
                         }
                     }
                     listaLexemas.add(new Lexema(lexemaEncontrado,"ERROR"));
+                    sbResultados.append(mensajeError).append("\n");//nuevo todavia no lo agregamos al principal
                 }
             }//fin while
             sbTexto.append(linea).append("\n");
+            numeroLinea++;//nuevo todavia no lo agregamos al principal
         }
          for (Lexema e : listaLexemas) {
             System.out.println(e);
