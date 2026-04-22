@@ -9,8 +9,7 @@ public class Lexema {
     public Lexema(String dato, String tipo) {
         this.dato = dato;
         this.tipo = tipo;
-        
-        //cambios aun no aplicados al principal
+     
         switch (tipo) {
         case "ID":
             this.token = ALexico.esReservada(dato);

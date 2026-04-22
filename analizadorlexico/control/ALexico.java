@@ -41,8 +41,7 @@ public class ALexico {
     public static final int PUNTO_Y_COMA = 52; // ;
     public static final int PARENTESIS_ABRE = 53; // (
     public static final int PARENTESIS_CIERRA = 54; // )
-    
-    //cambios aun no puestos en el principlas, quitar cuando se agreguen
+
     private static final Map<String, Integer> palabrasReservadas = new HashMap<>();
     static {
         palabrasReservadas.put("const", 10);
