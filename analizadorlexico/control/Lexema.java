@@ -9,17 +9,28 @@ public class Lexema {
     public Lexema(String dato, String tipo) {
         this.dato = dato;
         this.tipo = tipo;
-        if (tipo.equals("ID")) {
-           this.token = ALexico.esReservada(dato);
-           this.tipo =(this.token == ALexico.IDENTIFICADOR) ? "ID": "PR";
-        }else if (tipo.equals("NUM")) {
+        
+        //cambios aun no aplicados al principal
+        switch (tipo) {
+        case "ID":
+            this.token = ALexico.esReservada(dato);
+            this.tipo = (this.token == ALexico.IDENTIFICADOR) ? "ID" : "PR";
+            break;
+            
+        case "NUM":
             this.token = ALexico.NUMERO;
-        } else if (tipo.equals("ERROR")) {
-            this.token=0;
-        }else{
-            this.tipo ="SIGNO";
-            this.token =ALexico.obtenerTokenOp(dato);
-        }
+            break;
+            
+        case "ERROR":
+            this.token = 0;
+            break;
+            
+        default:
+            // El caso 'default' actúa como tu último 'else'
+            this.tipo = "SIGNO";
+            this.token = ALexico.obtenerTokenOp(dato);
+            break;
+    }
     }
    
     //getters y setters
