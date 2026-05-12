@@ -17,7 +17,7 @@ public class AnStintaxis {
 return 0;
     }
     public void programa(){
-        tok=getNextToken();
+        tok=getNextToken(); 
         bloque();
         if (tok!=32){ //32 deberia ser la constante .  if (tok != Lex.PUNTO){
             System.out.println("Error");
