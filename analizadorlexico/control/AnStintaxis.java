@@ -57,7 +57,7 @@ return 0;
     */
    public void factor(){
     switch (tok) {
-        case 100: //id
+        case 100: //id 
         case 200: //num   
         tok=getNextToken();
         break;
