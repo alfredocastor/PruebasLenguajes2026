@@ -10,13 +10,13 @@ import java.util.List;
  *
  * @author Alfredo
  */
-public class Sintaxis {
+public class ASintactico {
     private List<Lexema> lexemas; 
     private int indice;
     private Lexema lexemaActual;
     private int tok;
 
-    public Sintaxis(List<Lexema> lexemas) {
+    public ASintactico(List<Lexema> lexemas) {
         this.lexemas = lexemas;
         this.indice = -1;
     }
