@@ -1,7 +1,11 @@
 package analizadorlexico.vista;
 
+import analizadorlexico.control.ASintaxis;
+import analizadorlexico.control.Lexema;
+import analizadorlexico.control.Sintaxis;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
@@ -88,6 +92,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         itemSintactico.setText("Sintáctico");
         itemSintactico.setEnabled(false);
+        itemSintactico.addActionListener(this::itemSintacticoActionPerformed);
         menuCompilar.add(itemSintactico);
 
         barraMenu.add(menuCompilar);
@@ -162,6 +167,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     txtMensajes.append("\nSe encontraron errores léxicos. Corríjalos para continuar.");
 }
     }//GEN-LAST:event_itemLexicoActionPerformed
+
+    private void itemSintacticoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemSintacticoActionPerformed
+   // Aqui va la llamada sintaxis
+    ArrayList<Lexema> n= analizador.getLexemas();
+        System.out.println(n.size());
+    ASintaxis s = new ASintaxis(n);
+    s.programa();
+    
+    }//GEN-LAST:event_itemSintacticoActionPerformed
 
     /**
      * @param args the command line arguments

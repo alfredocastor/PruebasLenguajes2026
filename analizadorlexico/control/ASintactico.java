@@ -16,6 +16,9 @@ public class ASintactico {
     private Lexema lexemaActual;
     private int tok;
 
+    private StringBuilder mensajesLog = new StringBuilder();//nuevo
+    private boolean hayErrores = false;//nuevo
+    
     public ASintactico(List<Lexema> lexemas) {
         this.lexemas = lexemas;
         this.indice = -1;
@@ -32,7 +35,8 @@ public class ASintactico {
 
     private void error(String mensaje) {
         String dato = (lexemaActual != null) ? lexemaActual.getDato() : "EOF";
-        System.out.println("Error Sintáctico cerca de '" + dato + "': " + mensaje);
+       mensajesLog.append("Error Sintáctico cerca de '").append(dato).append("': ").append(mensaje).append("\n"); //nuevo
+        hayErrores = true; // Marcamos que encontramos un error //nuevo
     }
 
     // <programa> -> <Bloque> .
@@ -40,7 +44,9 @@ public class ASintactico {
         tok = getNextToken();
         bloque();
         if (tok == ALexico.PUNTO) {
-            System.out.println("Compilación exitosa."); 
+           if (!hayErrores) { //nuevo
+                mensajesLog.append("Compilación sintáctica exitosa. No se encontraron errores.\n");
+            }
         } else {
             error("Se esperaba '.' al final del programa.");
         }
@@ -303,5 +309,8 @@ public class ASintactico {
                 break;
             default: error("Se esperaba identificador, número o '('."); 
         }
+    }
+    public String getMensajesLog() {
+        return mensajesLog.toString();
     }
 }

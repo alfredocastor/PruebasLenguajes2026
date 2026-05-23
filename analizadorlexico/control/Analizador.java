@@ -8,6 +8,8 @@ import javax.swing.JOptionPane;
 
 public class Analizador {
 
+    private ArrayList<Lexema> listaLexemas;//Nuevo
+    
     private int contador;
     private String textoProcesado;
     private String identificadores;
@@ -29,7 +31,7 @@ public class Analizador {
                 "(\\.|,|;|\\(|\\)|:)|"+//
                 "(\\s)|" +//
                 "(.)";
-        List<Lexema> listaLexemas = new ArrayList<>();
+        listaLexemas = new ArrayList<>();//nuevo cambio
         Pattern patron = Pattern.compile(regex);
 
         String[] lineas = codigoOriginal.split("\n");
@@ -122,4 +124,10 @@ public class Analizador {
     public boolean tieneErrores() {
         return hayErrores; 
     }
+   
+    
+    public ArrayList<Lexema> getLexemas(){ //nuevo
+        return listaLexemas;
+    }
+    
 }
