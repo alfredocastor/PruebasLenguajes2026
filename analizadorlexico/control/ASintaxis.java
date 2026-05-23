@@ -45,7 +45,7 @@ public class ASintaxis {
             error("Se esperaba '.' al final del programa");
             return;
         }
-        System.out.println("Compilacion exitosa"); 
+        System.out.println("Analisis Sintáctico completado con exito. El código fuente cumple con la gramática"); 
     }
 
     // <Bloque> -> <Lin1> <Lin2> <Lin3> <proposicion>

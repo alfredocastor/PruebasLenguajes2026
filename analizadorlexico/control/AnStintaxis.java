@@ -22,7 +22,7 @@ return 0;
         if (tok!=32){ //32 deberia ser la constante .  if (tok != Lex.PUNTO){
             System.out.println("Error");
         }else {
-            System.out.println("compilacion exitosa");
+            System.out.println("Analisis Sintáctico completado con exito. El código fuente cumple con la gramática");
         }
     }
     public void bloque(){
