@@ -28,7 +28,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
      */
     public VentanaPrincipal() {
         initComponents();
-        itemLexico.setEnabled(false); 
+        itemLexico.setEnabled(false);
         analizador = new analizadorlexico.control.Analizador();
         gestor = new analizadorlexico.control.GestorArchivos();
         setLocationRelativeTo(null);
@@ -134,7 +134,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 txtCodigo.setText(contenido);
                 txtMensajes.setText("Archivo cargado: " + archivo.getName());
                 itemLexico.setEnabled(true);
-                itemSintactico.setEnabled(false); 
+                itemSintactico.setEnabled(false);
             } catch (IOException e) {
                 JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
             }
@@ -155,26 +155,31 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             txtMensajes.append("\n--------------------------------");
             txtMensajes.append("\nTotal de identificadores: " + analizador.getContador());
             txtMensajes.append("\nTotal de números: " + analizador.getContadorNumeros());
-            
+
         } else {
             txtMensajes.setText("No hay código para analizar. Por favor, escribe o carga un archivo.");
         }
         if (!analizador.tieneErrores()) {
-    itemSintactico.setEnabled(true);
-    txtMensajes.append("\nAnálisis completado sin errores. Sintáctico habilitado.");
-} else {
-    itemSintactico.setEnabled(false);
-    txtMensajes.append("\nSe encontraron errores léxicos. Corríjalos para continuar.");
-}
+            itemSintactico.setEnabled(true);
+            txtMensajes.append("\nAnálisis completado sin errores. Sintáctico habilitado.");
+        } else {
+            itemSintactico.setEnabled(false);
+            txtMensajes.append("\nSe encontraron errores léxicos. Corríjalos para continuar.");
+
+        }
     }//GEN-LAST:event_itemLexicoActionPerformed
 
     private void itemSintacticoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemSintacticoActionPerformed
-   // Aqui va la llamada sintaxis
-    ArrayList<Lexema> n= analizador.getLexemas();
+        // Aqui va la llamada sintaxis
+        ArrayList<Lexema> n = analizador.getLexemas();
         System.out.println(n.size());
-    ASintaxis s = new ASintaxis(n);
-    s.programa();
-    
+        ASintaxis s = new ASintaxis(n);
+        s.programa();
+
+        txtMensajes.append("\n\n--------------------------------\n");
+        txtMensajes.append("=== RESULTADO SINTÁCTICO ===\n");
+        txtMensajes.append("Total de tokens leídos: " + n.size() + "\n");
+        txtMensajes.append(s.getMensajesSintaxis());
     }//GEN-LAST:event_itemSintacticoActionPerformed
 
     /**

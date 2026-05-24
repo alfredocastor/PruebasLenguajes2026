@@ -5,7 +5,6 @@
 package analizadorlexico.control;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -16,10 +15,18 @@ public class ASintaxis {
     private int indice;
     private Lexema lexemaActual;
     private int tok;
+    
+    private StringBuilder mensajesSintaxis;
+    private boolean hayErroresSintacticos;
 
     public ASintaxis(ArrayList<Lexema> lexema) {
         this.lexema = lexema;
         this.indice = -1;
+        this.mensajesSintaxis = new StringBuilder();
+        this.hayErroresSintacticos= false;
+    }
+    public String getMensajesSintaxis() {
+        return mensajesSintaxis.toString();
     }
 
     private int getNextToken() {
@@ -32,8 +39,11 @@ public class ASintaxis {
     }
 
     private void error(String mensaje) {
+        hayErroresSintacticos = true;
         String dato = (lexemaActual != null) ? lexemaActual.getDato() : "EOF";
-        System.out.println("Error Sintactico cerca de '" + dato + "': " + mensaje);
+       String textoError = "Error Sintactico cerca de '" + dato + "': " + mensaje;
+       System.out.println(textoError);
+        mensajesSintaxis.append(textoError).append("\n");
     }
 
     // <programa> -> <Bloque> .
@@ -43,9 +53,13 @@ public class ASintaxis {
         
         if (tok != ALexico.PUNTO) {
             error("Se esperaba '.' al final del programa");
-            return;
+            
         }
-        System.out.println("Analisis Sintáctico completado con exito. El código fuente cumple con la gramática"); 
+        if(!hayErroresSintacticos){
+       String mensajeExito = ("Analisis Sintactico completado con exito. El codigo fuente cumple con la gramatica"); 
+       System.out.println(mensajeExito);
+        mensajesSintaxis.append(mensajeExito).append("\n");
+        }
     }
 
     // <Bloque> -> <Lin1> <Lin2> <Lin3> <proposicion>
@@ -58,7 +72,7 @@ public class ASintaxis {
 
     // <Lin1> -> const <cicl1> ; | Ø
     public void lin1() {
-        if (tok != 10) return; // Si no es const (10), aplica regla Épsilon (Ø) y sale
+        if (tok != 10) return; // const 
 
         tok = getNextToken();
         cicl1();
@@ -102,7 +116,7 @@ public class ASintaxis {
 
     // <Lin2> -> var <cicl2> ; | Ø
     public void lin2() {
-        if (tok != 11) return; // Si no es var (11), aplica regla Épsilon (Ø) y sale
+        if (tok != 11) return; // var 
 
         tok = getNextToken();
         cicl2();
@@ -132,8 +146,7 @@ public class ASintaxis {
 
     // <Lin3> -> Proced Id ; <Bloque> ; <Lin3> | Ø
     public void lin3() {
-        if (tok != 12) return; // Si no es proced (12), aplica regla Épsilon (Ø) y sale
-
+        if (tok != 12) return; // proced 
         tok = getNextToken();
         if (tok != ALexico.IDENTIFICADOR) {
             error("Se esperaba un nombre para el procedimiento");

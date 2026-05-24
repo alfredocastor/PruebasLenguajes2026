@@ -8,7 +8,7 @@ import javax.swing.JOptionPane;
 
 public class Analizador {
 
-    private ArrayList<Lexema> listaLexemas;//Nuevo
+    private ArrayList<Lexema> listaLexemas;
     
     private int contador;
     private String textoProcesado;
@@ -22,6 +22,7 @@ public class Analizador {
         contadorNumeros = 0;
         StringBuilder sbTexto = new StringBuilder();
         StringBuilder sbResultados = new StringBuilder();
+        StringBuilder sbErrores = new StringBuilder(); 
         hayErrores = false;
         boolean ignorarErrores = false;
 
@@ -31,12 +32,12 @@ public class Analizador {
                 "(\\.|,|;|\\(|\\)|:)|"+//
                 "(\\s)|" +//
                 "(.)";
-        listaLexemas = new ArrayList<>();//nuevo cambio
+        listaLexemas = new ArrayList<>();
         Pattern patron = Pattern.compile(regex);
 
         String[] lineas = codigoOriginal.split("\n");
 
-        int numeroLinea = 1;//nuevo todavia no lo agregamos al principal
+        int numeroLinea = 1;
         
         for (String linea : lineas) {
             Matcher matcher = patron.matcher(linea);
@@ -72,8 +73,8 @@ public class Analizador {
                 
                 if (matcher.group(6) != null) { // Es un Error
                     hayErrores = true;
-                    int columna = matcher.start() + 1;//nuevo todavia no lo agregamos al principal
-                    String mensajeError = "Error Léxico -> Línea: " + numeroLinea + ", Columna: " + columna + " | Carácter: '" + matcher.group(6) + "'";//nuevo todavia no lo agregamos al principal
+                    int columna = matcher.start() + 1;
+                    String mensajeError = "Error Léxico -> Línea: " + numeroLinea + ", Columna: " + columna + " | Carácter: '" + matcher.group(6) + "'";
                     if (!ignorarErrores) {
                         int opcion = JOptionPane.showConfirmDialog(null,
                                 "Error Léxico: Carácter no reconocido '" + matcher.group(6) + "'.\n¿Desea continuar y marcar todos los errores?",
@@ -87,16 +88,20 @@ public class Analizador {
                         }
                     }
                     listaLexemas.add(new Lexema(lexemaEncontrado,"ERROR"));
-                    sbResultados.append(mensajeError).append("\n");//nuevo todavia no lo agregamos al principal
+                    sbErrores.append(mensajeError).append("\n");
                 }
             }//fin while
             sbTexto.append(linea).append("\n");
-            numeroLinea++;//nuevo todavia no lo agregamos al principal
+            numeroLinea++;
         }
          for (Lexema e : listaLexemas) {
             System.out.println(e);
             sbResultados.append(e.toString()).append("\n");
          }
+         if (hayErrores) { 
+            sbResultados.append("\n--- Errores Léxicos Encontrados ---\n");
+            sbResultados.append(sbErrores.toString());
+        }
           textoProcesado = sbTexto.toString();
           identificadores = sbResultados.toString();
     }
@@ -126,7 +131,7 @@ public class Analizador {
     }
    
     
-    public ArrayList<Lexema> getLexemas(){ //nuevo
+    public ArrayList<Lexema> getLexemas(){ 
         return listaLexemas;
     }
     
